@@ -1,29 +1,20 @@
 from flask import Flask, request, render_template
-from flaskext.mysql import MySQL
+from Connection import *
 
-#instanciar a aplicação usando o Flask
+db_comands = Flask(__name__)
+config_connection(db_comands)
+cursor = get_cursor()
 
-Servlets = Flask(__name__)
-
-Servlets.config['MYSQL_DATABASE_USER'] = 'root'
-Servlets.config['MYSQL_DATABASE_PASSWORD'] = 'root'
-Servlets.config['MYSQL_DATABASE_DB'] = 'supermercado'
-
-mysql = MySQL()
-mysql.init_app(Servlets)
-
-@Servlets.route('/')
+@db_comands.route('/')
 def index():
     return render_template('login.html')
 
 
-@Servlets.route('/servlogin')
+@db_comands.route('/servlogin')
 
 def servlogin():
     name = request.args.get('name')
     password = request.args.get('password')
-
-    cursor = mysql.get_db().cursor()
 
     cursor.execute(f'select name from users where name = \'{name}\' AND password = \'{password}\'')
 
@@ -32,15 +23,14 @@ def servlogin():
     return listar_produtos()
 
 def listar_produtos():
-    cursor = mysql.get_db().cursor()
 
     cursor.execute('select * from products')
     produtos = cursor.fetchall() #dictionary
     return render_template('/listarprodutos.html', produtos = produtos)
 
-@Servlets.route('/detalhar')
+@db_comands.route('/detalhar')
 def detalhar():
-    cursor = mysql.get_db().cursor()
+    cursor = get_cursor
 
     id = request.args.get('id')
 
@@ -50,4 +40,4 @@ def detalhar():
     return render_template('/detalharproduto.html', produto = produto)
 
 
-Servlets.run()
+db_comands.run()
