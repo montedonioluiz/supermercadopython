@@ -1,7 +1,5 @@
 from flaskext.mysql import MySQL
 
-
-
 def get_cursor(main):
     main.config['MYSQL_DATABASE_USER'] = 'root'
     main.config['MYSQL_DATABASE_PASSWORD'] = 'root'
