@@ -5,6 +5,9 @@
     <title>Lista</title>
 </head>
 <body>
+
+<a href="static/incluirproduto.html" onload="mostrar_msg(sucess_message)">Incluir Produto</a>
+
     <table border="1">
         <tr>
             <th> Nome </th>
@@ -12,10 +15,15 @@
         </tr>
         {% for produto in produtos %}
         <tr>
-            <td> <a href="http://127.0.0.1:5000/detalhar?id={{produto[0]}}"> {{produto[2]}} </a></td>
+            <td> <a href="detalhar?id={{produto[0]}}"> {{produto[2]}} </a></td>
             <td> {{ produto[4] }} </td>
         </tr>
         {% endfor %}
     </table>
+    <script>
+        function mostrar_msg(msg){
+            alert(msg);
+        }
+    </script>
 </body>
 </html>

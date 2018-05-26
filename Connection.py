@@ -10,4 +10,4 @@ def get_cursor(main):
 
     conn = mysql.connect()
     cursor = conn.cursor()
-    return mysql, conn, cursor
+    return conn, cursor
